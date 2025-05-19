@@ -41,7 +41,7 @@ public final class CartPage extends BasePage{
 
     @Step("Click finish button")
     public CartPage clickOnFinish(){
-        page.click("[data-test=\"continue\"]");
+        page.click("[data-test=\"finish\"]");
         return this;
     }
 
