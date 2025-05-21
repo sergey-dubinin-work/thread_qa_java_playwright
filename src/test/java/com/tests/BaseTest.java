@@ -11,10 +11,7 @@ import com.utils.BasePageFactory;
 import com.utils.BrowserManager;
 import io.qameta.allure.Attachment;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -28,12 +25,12 @@ import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnviro
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseTest {
 
-    protected Playwright playwright;
-    protected Browser browser;
+    private Playwright playwright;
+    private Browser browser;
     protected BrowserContext browserContext;
     protected Page page;
     protected LoginPage loginPage;
-    protected boolean needVideo;
+    private boolean needVideo;
 
     @RegisterExtension
     AfterTestExecutionCallback callback =
@@ -85,6 +82,12 @@ public abstract class BaseTest {
             captureVideo();
         }
         needVideo = false;
+    }
+
+    @AfterAll
+    public void afterAll() {
+        browser.close();
+        playwright.close();
     }
 
     @Attachment(value = "Test video", type = "video/webm")
